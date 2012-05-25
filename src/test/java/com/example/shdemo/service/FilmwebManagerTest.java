@@ -2,6 +2,8 @@ package com.example.shdemo.service;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shdemo.domain.Actor;
-import com.example.shdemo.domain.ActorMovie;
 import com.example.shdemo.domain.Movie;
+import com.example.shdemo.service.FilmwebManager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
@@ -62,33 +64,6 @@ public class FilmwebManagerTest {
 		assertEquals(GENRE_1, retrievedMovie.getGenre());
 		assertEquals(YEAR_1, retrievedMovie.getYear());
 	}
-	
-	@Test
-	public void addActorMovieCheck() {
-		Actor actor = new Actor();
-		actor.setFirstName(FIRSTNAME_1);
-		actor.setLastName(LASTNAME_1);
-
-		filmwebManager.addActor(actor);
-		
-		Movie movie = new Movie();
-		movie.setName(NAME_1);
-		movie.setYear(YEAR_1);
-		movie.setGenre(GENRE_1);
-		movie.setTime(TIME_1);
-
-		filmwebManager.addMovie(movie);
-		
-		long actorId = filmwebManager.getLatestActorId();
-		long movieId = filmwebManager.getLatestMovieId();
-		filmwebManager.addActorMovie(actorId, movieId);
-		
-		ActorMovie retrievedActorMovie = filmwebManager.findActorMovieById(filmwebManager.getLatestActorMovieId());
-		long retrievedActorId = retrievedActorMovie.getActor().getId();
-		long retrievedMovieId = retrievedActorMovie.getMovie().getId();
-		assertEquals(actorId, retrievedActorId);
-		assertEquals(movieId, retrievedMovieId);
-	}
 
 	@Test
 	public void deleteActorCheck() {
@@ -106,13 +81,7 @@ public class FilmwebManagerTest {
 	}
 	
 	@Test
-	public void cascadeCheck() {
-		Actor actor = new Actor();
-		actor.setFirstName(FIRSTNAME_1);
-		actor.setLastName(LASTNAME_1);
-
-		filmwebManager.addActor(actor);
-		
+	public void cascadeCheck() {		
 		Movie movie = new Movie();
 		movie.setName(NAME_1);
 		movie.setYear(YEAR_1);
@@ -121,15 +90,20 @@ public class FilmwebManagerTest {
 
 		filmwebManager.addMovie(movie);
 		
-		long actorId = filmwebManager.getLatestActorId();
-		long movieId = filmwebManager.getLatestMovieId();
-		filmwebManager.addActorMovie(actorId, movieId);
+		Actor actor = new Actor();
+		actor.setFirstName(FIRSTNAME_1);
+		actor.setLastName(LASTNAME_1);
 		
-		long lastActorMovieId = filmwebManager.getLatestActorMovieId();
+		Movie odebranyFilm = filmwebManager.findMovieById(filmwebManager.getLatestMovieId());
 		
-		filmwebManager.deleteActor(actor);
+		HashSet<Movie> cos = new HashSet<Movie>(0);
+		cos.add(odebranyFilm);
 		
-		assertNull(filmwebManager.findActorMovieById(lastActorMovieId));
+		actor.setMovies(cos);
+
+		filmwebManager.addActor(actor);
+		
+		assertEquals(true, filmwebManager.findActorById(filmwebManager.getLatestActorId()).getMovies().contains(odebranyFilm));
 	}
 	
 }

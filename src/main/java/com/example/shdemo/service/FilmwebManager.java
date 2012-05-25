@@ -3,7 +3,6 @@ package com.example.shdemo.service;
 import java.util.List;
 
 import com.example.shdemo.domain.Actor;
-import com.example.shdemo.domain.ActorMovie;
 import com.example.shdemo.domain.Movie;
 
 public interface FilmwebManager {
@@ -20,10 +19,10 @@ public interface FilmwebManager {
 	Movie findMovieById(Long movieId);
 	Long getLatestMovieId();
 	
-	void addActorMovie(Long actorId, Long movieId);
+	/*void addActorMovie(Long actorId, Long movieId);
 	void deleteActorMovie(Long actorId, Long movieId);
 	List<ActorMovie> getAllActorMovies();
 	ActorMovie findActorMovieById(Long actorMovieId);
-	Long getLatestActorMovieId();
+	Long getLatestActorMovieId();*/
 
 }

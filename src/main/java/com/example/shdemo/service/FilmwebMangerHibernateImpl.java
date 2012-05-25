@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shdemo.domain.Actor;
-import com.example.shdemo.domain.ActorMovie;
 import com.example.shdemo.domain.Movie;
 
 @Component
@@ -46,12 +45,12 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 			tx = sessionFactory.openSession().beginTransaction();
 			actor = (Actor) sessionFactory.getCurrentSession().get(Actor.class, actor.getId());
 			
-			List<ActorMovie> retrievedActorMovies = getAllActorMovies();
+			/*List<ActorMovie> retrievedActorMovies = getAllActorMovies();
 			for (ActorMovie actorMovie : retrievedActorMovies) {
 				if (actor.getId().equals(actorMovie.getActor().getId())) {
 					sessionFactory.getCurrentSession().delete(actorMovie);
 				}
-			}
+			}*/
 
 			sessionFactory.getCurrentSession().delete(actor);
 		    tx.commit();
@@ -80,12 +79,12 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 			tx = sessionFactory.openSession().beginTransaction();
 			movie = (Movie) sessionFactory.getCurrentSession().get(Movie.class, movie.getId());
 			
-			List<ActorMovie> retrievedActorMovies = getAllActorMovies();
+			/*List<ActorMovie> retrievedActorMovies = getAllActorMovies();
 			for (ActorMovie actorMovie : retrievedActorMovies) {
 				if (movie.getId().equals(actorMovie.getMovie().getId())) {
 					sessionFactory.getCurrentSession().delete(actorMovie);
 				}
-			}
+			}*/
 	
 			sessionFactory.getCurrentSession().delete(movie);
 			tx.commit();
@@ -101,7 +100,7 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 		return (Actor) sessionFactory.getCurrentSession().get(Actor.class, actorId);
 	}
 
-	@Override
+	/*@Override
 	public void addActorMovie(Long actorId, Long movieId) {
 		ActorMovie actorMovie = new ActorMovie();
 		
@@ -113,23 +112,23 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 		actorMovie.setMovie(movie);
 		
 		sessionFactory.getCurrentSession().persist(actorMovie);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void deleteActorMovie(Long actorId, Long movieId) {
 		// TODO
-	}
+	}*/
 
 	@Override
 	public Movie findMovieById(Long movieId) {
 		return (Movie) sessionFactory.getCurrentSession().get(Movie.class, movieId);
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@Override
 	public List<ActorMovie> getAllActorMovies() {
 		return sessionFactory.getCurrentSession().getNamedQuery("actorMovie.all").list();
-	}
+	}*/
 
 	@Override
 	public Long getLatestActorId() {
@@ -141,14 +140,14 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 		return (Long) sessionFactory.getCurrentSession().createQuery("select max(id) from Movie").uniqueResult();
 	}
 
-	@Override
+	/*@Override
 	public ActorMovie findActorMovieById(Long actorMovieId) {
 		return (ActorMovie) sessionFactory.getCurrentSession().get(ActorMovie.class, actorMovieId);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public Long getLatestActorMovieId() {
 		return (Long) sessionFactory.getCurrentSession().createQuery("select max(id) from ActorMovie").uniqueResult();
-	}
+	}*/
 
 }
