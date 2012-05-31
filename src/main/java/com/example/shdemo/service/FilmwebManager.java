@@ -12,17 +12,13 @@ public interface FilmwebManager {
 	void deleteActor(Actor actor);
 	Actor findActorById(Long actorId);
 	Long getLatestActorId();
+	void updateActor(Actor actor);
 	
 	void addMovie(Movie movie);
 	List<Movie> getAllMovies();
 	void deleteMovie(Movie movie);
 	Movie findMovieById(Long movieId);
 	Long getLatestMovieId();
-	
-	/*void addActorMovie(Long actorId, Long movieId);
-	void deleteActorMovie(Long actorId, Long movieId);
-	List<ActorMovie> getAllActorMovies();
-	ActorMovie findActorMovieById(Long actorMovieId);
-	Long getLatestActorMovieId();*/
+	void updateMovie(Movie movie);
 
 }

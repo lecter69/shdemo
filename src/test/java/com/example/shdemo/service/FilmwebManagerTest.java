@@ -77,7 +77,35 @@ public class FilmwebManagerTest {
 
 		filmwebManager.deleteActor(actor);
 
-		assertNull(filmwebManager.findMovieById(latestActorId));		
+		assertNull(filmwebManager.findActorById(latestActorId));		
+	}
+	
+	@Test
+	public void updateActorCheck(){
+		Actor actor = new Actor();
+		actor.setFirstName(FIRSTNAME_1);
+		actor.setLastName(LASTNAME_1);
+
+		Actor actor2 = new Actor();
+		actor2.setFirstName(FIRSTNAME_1 + FIRSTNAME_1);
+		actor2.setLastName(LASTNAME_1 + LASTNAME_1);
+		
+		filmwebManager.addActor(actor);
+		filmwebManager.addActor(actor2);
+				
+		long latestActorId = filmwebManager.getLatestActorId();
+		
+		Actor actor3 = new Actor();
+		actor3.setId(latestActorId);
+		actor3.setFirstName(FIRSTNAME_1 + FIRSTNAME_1 + FIRSTNAME_1);
+		actor3.setLastName(LASTNAME_1 + LASTNAME_1 + LASTNAME_1);
+		
+		filmwebManager.updateActor(actor3);
+		
+		Actor test2 = filmwebManager.findActorById(latestActorId);		
+		
+		assertEquals(test2.getFirstName(), actor3.getFirstName());
+		assertEquals(test2.getLastName(), actor3.getLastName());
 	}
 	
 	@Test
