@@ -1,6 +1,7 @@
 package com.example.shdemo.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.example.shdemo.domain.Actor;
 import com.example.shdemo.domain.Movie;
@@ -20,5 +21,6 @@ public interface FilmwebManager {
 	Movie findMovieById(Long movieId);
 	Long getLatestMovieId();
 	void updateMovie(Movie movie);
+	Set<Movie> getMovies(Long actorId);
 
 }

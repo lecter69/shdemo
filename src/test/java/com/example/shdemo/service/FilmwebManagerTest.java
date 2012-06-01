@@ -3,6 +3,7 @@ package com.example.shdemo.service;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ import com.example.shdemo.service.FilmwebManager;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
 @TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
-@Transactional
+//@Transactional
 public class FilmwebManagerTest {
 
 	@Autowired
@@ -127,11 +128,20 @@ public class FilmwebManagerTest {
 		HashSet<Movie> cos = new HashSet<Movie>(0);
 		cos.add(odebranyFilm);
 		
-		actor.setMovies(cos);
-
 		filmwebManager.addActor(actor);
 		
-		assertEquals(true, filmwebManager.findActorById(filmwebManager.getLatestActorId()).getMovies().contains(odebranyFilm));
+		actor.setMovies(cos);
+		
+		filmwebManager.updateActor(actor);
+				
+		Set<Movie> aa = filmwebManager.getMovies(filmwebManager.getLatestActorId());
+		
+		Movie odebranyFilm2 = aa.iterator().next();
+		
+		assertEquals(odebranyFilm.getName(), odebranyFilm2.getName());
+		assertEquals(odebranyFilm.getYear(), odebranyFilm2.getYear());
+		assertEquals(odebranyFilm.getGenre(), odebranyFilm2.getGenre());
+		assertEquals(odebranyFilm.getTime(), odebranyFilm2.getTime());
 	}
 	
 }

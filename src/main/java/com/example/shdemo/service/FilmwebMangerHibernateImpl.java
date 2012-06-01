@@ -1,6 +1,8 @@
 package com.example.shdemo.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -106,6 +108,7 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 		Actor actor2 = (Actor) sessionFactory.getCurrentSession().get(Actor.class, actor.getId());
 		actor2.setFirstName(actor.getFirstName());
 		actor2.setLastName(actor.getLastName());
+		actor2.setMovies(actor.getMovies());
 	}
 
 	@Override
@@ -116,6 +119,13 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 		movie2.setYear(movie.getYear());
 		movie2.setGenre(movie.getGenre());
 		movie2.setTime(movie.getTime());
+	}
+
+	@Override
+	public HashSet<Movie> getMovies(Long actorId) {
+		Actor actor = (Actor) sessionFactory.getCurrentSession().get(Actor.class, actorId);
+		
+		return new HashSet<Movie> (actor.getMovies());
 	}
 
 }
