@@ -49,6 +49,39 @@ public class FilmwebManagerTest {
 	}
 	
 	@Test
+	public void getAllActorsCheck() {
+		Actor actor = new Actor();
+		actor.setFirstName(FIRSTNAME_1);
+		actor.setLastName(LASTNAME_1);
+		
+		Actor actor2 = new Actor();
+		actor2.setFirstName(FIRSTNAME_1 + FIRSTNAME_1);
+		actor2.setLastName(LASTNAME_1 + LASTNAME_1);
+
+		filmwebManager.addActor(actor);
+		filmwebManager.addActor(actor2);
+		
+		long id = filmwebManager.getLatestActorId();
+		
+		Actor retrievedActor1 = filmwebManager.findActorById(id);
+		Actor retrievedActor2 = filmwebManager.findActorById(id - 1);
+		
+		if (retrievedActor1.getFirstName().equals(FIRSTNAME_1)) {
+			assertEquals(FIRSTNAME_1, retrievedActor1.getFirstName());
+			assertEquals(LASTNAME_1, retrievedActor1.getLastName());
+			assertEquals(FIRSTNAME_1 + FIRSTNAME_1, retrievedActor2.getFirstName());
+			assertEquals(LASTNAME_1 + LASTNAME_1, retrievedActor2.getLastName());
+		} else {
+			assertEquals(FIRSTNAME_1, retrievedActor2.getFirstName());
+			assertEquals(LASTNAME_1, retrievedActor2.getLastName());
+			assertEquals(FIRSTNAME_1 + FIRSTNAME_1, retrievedActor1.getFirstName());
+			assertEquals(LASTNAME_1 + LASTNAME_1, retrievedActor1.getLastName());
+		}
+		
+		
+	}
+	
+	@Test
 	public void addMovieCheck() {
 		Movie movie = new Movie();
 		movie.setName(NAME_1);
@@ -75,6 +108,11 @@ public class FilmwebManagerTest {
 		filmwebManager.addActor(actor);
 		
 		long latestActorId = filmwebManager.getLatestActorId();
+		
+		Actor test = filmwebManager.findActorById(latestActorId);
+		
+		assertEquals(FIRSTNAME_1, test.getFirstName());
+		assertEquals(LASTNAME_1, test.getLastName());
 
 		filmwebManager.deleteActor(actor);
 

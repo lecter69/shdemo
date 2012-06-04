@@ -124,7 +124,6 @@ public class FilmwebMangerHibernateImpl implements FilmwebManager {
 	@Override
 	public HashSet<Movie> getMovies(Long actorId) {
 		Actor actor = (Actor) sessionFactory.getCurrentSession().get(Actor.class, actorId);
-		
 		return new HashSet<Movie> (actor.getMovies());
 	}
 
